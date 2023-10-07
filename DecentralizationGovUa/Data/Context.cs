@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Data
 {
-    internal static class Context
+    public static class Context
     {
         public static IDbConnection Connection 
         {

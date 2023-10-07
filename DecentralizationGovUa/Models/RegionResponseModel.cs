@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Models
 {
-    internal class RegionResponseModel
+    public class RegionResponseModel
     {
         [JsonProperty("id")]
         public int Id { get; set; }

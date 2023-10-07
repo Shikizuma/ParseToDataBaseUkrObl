@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ParseToDataBaseUkrObl.Data
+namespace DecentralizationGovUa.Enums
 {
-    internal class DataBaseContext
+    public enum Status
     {
-
+        Ok = 200,
+        NotFound = 404,
+        Error = 500
     }
 }
