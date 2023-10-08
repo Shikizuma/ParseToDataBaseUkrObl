@@ -1,10 +1,13 @@
-﻿namespace ParseToDataBaseUkrObl
+﻿using DecentralizationGovUa.Implements;
+
+namespace ParseToDataBaseUkrObl
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            
+            ParseDecentralizationGovUa parseDecentralizationGovUa = new ParseDecentralizationGovUa();
+            var response = await parseDecentralizationGovUa.Parse();
         }
     }
 }

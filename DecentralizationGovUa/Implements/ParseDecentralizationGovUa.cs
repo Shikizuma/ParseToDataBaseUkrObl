@@ -1,4 +1,5 @@
 ﻿using DecentralizationGovUa.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +10,36 @@ namespace DecentralizationGovUa.Implements
 {
     public class ParseDecentralizationGovUa
     {
-        private readonly string _url = "decentralization.gov.ua/graphql?query={areas{title,id,square,population,local_community_count,percent_communities_from_area,sum_communities_square}}"
-        public async Task<BaseResponse<RegionResponseModel>> Parse()
+        private readonly string _url = "https://decentralization.gov.ua/graphql";
+
+        public async Task<BaseResponse<DataResponseModel>> Parse()
         {
-            var baseResponse = new BaseResponse<RegionResponseModel>();
+            var baseResponse = new BaseResponse<DataResponseModel>();
 
             try
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var responce = await client.GetAsync(_url);
-
-                    if (!responce.IsSuccessStatusCode)
+                    var query = "{areas{title,id,square,population,local_community_count,percent_communities_from_area,sum_communities_square}}";
+                    var requestData = new
                     {
-                        throw new Exception(responce.IsSuccessStatusCode.ToString());
+                        query
+                    };
+                    var jsonRequest = JsonConvert.SerializeObject(requestData);
+                    var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+
+                    var response = await client.PostAsync(_url, content);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new Exception(response.ReasonPhrase);
                     }
 
-                    string json = await responce.Content.ReadAsStringAsync();
+                    string jsonResponse = await response.Content.ReadAsStringAsync();
+
+                    Console.WriteLine(jsonResponse);
+
+                    baseResponse.Data = JsonConvert.DeserializeObject<DataResponseModel>(jsonResponse);
                 }
             }
             catch (Exception ex)

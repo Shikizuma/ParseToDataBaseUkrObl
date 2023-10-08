@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Models
 {
-    public class RegionResponseModel
+    public class DataResponseModel
     {
-        [JsonProperty("areas")]
-        public List<RegionDataModel> Areas { get; set; }
+        [JsonProperty("data")]
+        public RegionResponseModel Data { get; set; }
     }
 }
