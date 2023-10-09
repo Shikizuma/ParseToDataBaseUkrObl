@@ -1,6 +1,7 @@
 ﻿using DecentralizationGovUa.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,11 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Implements
 {
-    public class ParseDecentralizationGovUa
+    public class ParseDecentralizationGovUa : IEnumerable<RegionDataModel>, IEnumerator<RegionDataModel>
     {
         private readonly string _url = "https://decentralization.gov.ua/graphql";
+
+       
 
         public async Task<BaseResponse<DataResponseModel>> Parse()
         {
@@ -21,12 +24,13 @@ namespace DecentralizationGovUa.Implements
                 using (HttpClient client = new HttpClient())
                 {
                     var query = "{areas{title,id,square,population,local_community_count,percent_communities_from_area,sum_communities_square}}";
-                    var requestData = new
-                    {
-                        query
-                    };
+                    var requestData = new { query };
+                    Console.WriteLine(requestData);
                     var jsonRequest = JsonConvert.SerializeObject(requestData);
+                    Console.WriteLine(jsonRequest);
                     var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+
+                    Console.WriteLine(content.Headers);
 
                     var response = await client.PostAsync(_url, content);
 
@@ -48,6 +52,35 @@ namespace DecentralizationGovUa.Implements
             }
 
             return baseResponse;
+        }
+
+        public RegionDataModel Current => throw new NotImplementedException();
+
+        object IEnumerator.Current => throw new NotImplementedException();
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<RegionDataModel> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool MoveNext()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 }
