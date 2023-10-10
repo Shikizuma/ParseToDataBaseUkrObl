@@ -1,4 +1,6 @@
-﻿using DecentralizationGovUa.Implements;
+﻿using DecentralizationGovUa.Data;
+using DecentralizationGovUa.Implements;
+using Dapper;
 
 namespace ParseToDataBaseUkrObl
 {
@@ -7,10 +9,17 @@ namespace ParseToDataBaseUkrObl
         static async Task Main(string[] args)
         {
             ParseDecentralizationGovUa parseDecentralizationGovUa = new ParseDecentralizationGovUa();
-            foreach (var region in parseDecentralizationGovUa)
+            using (var database = Context.Connection)
             {
-                Console.WriteLine(region);
+                foreach (var region in parseDecentralizationGovUa)
+                {
+                    await database.ExecuteAsync(@"
+                    INSERT INTO Regions 
+                    VALUES 
+                    (@Id, @Title, @Square, @Population, @LocalCommunityCount, @PercentCommunitiesFromArea, @SumCommunitiesSquare)", region);
+                }
             }
+     
         }
     }
 }
