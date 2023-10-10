@@ -24,6 +24,11 @@ namespace DecentralizationGovUa.Models
         public float? PercentCommunitiesFromArea { get; set; }
         [JsonProperty("sum_communities_square")]
         public float? SumCommunitiesSquare { get; set; }
-     
+
+        public override string ToString()
+        {
+            return $"id: {Id}\n" +
+                $"title: {Title}\n";
+        }
     }
 }

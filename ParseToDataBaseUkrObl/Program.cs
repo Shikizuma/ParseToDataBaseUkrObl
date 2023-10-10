@@ -7,7 +7,10 @@ namespace ParseToDataBaseUkrObl
         static async Task Main(string[] args)
         {
             ParseDecentralizationGovUa parseDecentralizationGovUa = new ParseDecentralizationGovUa();
-            var response = await parseDecentralizationGovUa.Parse();
+            foreach (var region in parseDecentralizationGovUa)
+            {
+                Console.WriteLine(region);
+            }
         }
     }
 }

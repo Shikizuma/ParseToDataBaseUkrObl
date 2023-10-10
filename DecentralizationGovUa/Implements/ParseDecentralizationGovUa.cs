@@ -65,7 +65,16 @@ namespace DecentralizationGovUa.Implements
 
         public IEnumerator<RegionDataModel> GetEnumerator()
         {
-            throw new NotImplementedException();
+            var result = Parse();
+            result.Wait();
+            var response = result.Result;
+            if (response.Status == Enums.Status.Ok)
+            {
+                foreach (var region in response.Data.Data.Areas)
+                {
+                    yield return region;
+                }
+            }
         }
 
         public bool MoveNext()
