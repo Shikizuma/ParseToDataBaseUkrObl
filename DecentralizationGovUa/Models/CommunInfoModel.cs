@@ -20,8 +20,6 @@ namespace DecentralizationGovUa.Models
         public float Square { get; set; }
         [JsonProperty("council_size")]
         public int CouncilSize { get; set; }
-        [JsonProperty("district_size")]
-        public int DistrictSize { get; set; }
         [JsonProperty("center")]
         public string Center { get; set; }
         [JsonProperty("koatuu")]

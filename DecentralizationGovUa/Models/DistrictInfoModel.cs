@@ -14,7 +14,7 @@ namespace DecentralizationGovUa.Models
         [JsonProperty("title")]
         public string Title { get; set; }
         [JsonProperty("population")]
-        public int Population { get; set; }
+        public float Population { get; set; }
         [JsonProperty("square")]
         public float? Square { get; set; }
         [JsonProperty("area_id")]
