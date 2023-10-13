@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace DecentralizationGovUa.Models
 {
     public class CommunDataResponseModel
     {
-        public CommunResponseModel communResponseModels { get; set; }
+        [JsonProperty("data")]
+        public CommunResponseModel Data { get; set; }
     }
 }

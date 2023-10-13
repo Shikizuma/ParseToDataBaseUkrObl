@@ -9,15 +9,13 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Implements
 {
-    public class ParseDecentralizationGovUa : IEnumerable<RegionInfoModel>, IEnumerator<RegionInfoModel>
+    public class ParseDecentralizationGovUa<M, D> : IEnumerable<RegionInfoModel>, IEnumerator<RegionInfoModel>
     {
         private readonly string _url = "https://decentralization.gov.ua/graphql";
 
-       
-
-        public async Task<BaseResponse<RegionDataResponseModel>> Parse()
+        public async Task<BaseResponse<D>> Parse()
         {
-            var baseResponse = new BaseResponse<RegionDataResponseModel>();
+            var baseResponse = new BaseResponse<D>();
 
             try
             {
@@ -43,7 +41,7 @@ namespace DecentralizationGovUa.Implements
 
                     Console.WriteLine(jsonResponse);
 
-                    baseResponse.Data = JsonConvert.DeserializeObject<RegionDataResponseModel>(jsonResponse);
+                    baseResponse.Data = JsonConvert.DeserializeObject<D>(jsonResponse);
                 }
             }
             catch (Exception ex)
