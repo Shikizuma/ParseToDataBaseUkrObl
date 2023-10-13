@@ -9,29 +9,32 @@ namespace ParseToDataBaseUkrObl
     {
         static async Task Main(string[] args)
         {
-            var queries = new List<string>()
+            var queries = new List<string>
             {
                 "{areas{title,id,square,population,local_community_count,percent_communities_from_area,sum_communities_square}}",
                 "{communities{title,id,population,square,council_size,district_size,center,koatuu,site,region_id,area_id}}",
                 "{regions{title,area_id,id,population,square}}"
             };
 
-            string tableName = "Regions";
+            var tables = new List<string> 
+            { 
+                "Districts", "OTGs", "Regions" 
+            };
+
+            await DeleteOldData(tables[1]);
+            await DeleteOldData(tables[0]);
+            await DeleteOldData(tables[2]);
+           
             var regionData = await new ParseDecentralizationGovUa<RegionDataResponseModel>(queries[0]).Parse();
-            await DeleteOldData(tableName);
-            await InsertData(tableName, regionData.Data.Data.Areas, new string[]
+            await InsertData(tables[2], regionData.Data.Data.Areas, new string[]
                 { "@Id", "@Title", "@Square", "@Population", "@LocalCommunityCount", "@PercentCommunitiesFromArea", "@SumCommunitiesSquare" });
 
-            tableName = "Districts";
             var districtData = await new ParseDecentralizationGovUa<DistrictDataResponseModel>(queries[2]).Parse();
-            await DeleteOldData(tableName);
-            await InsertData(tableName, districtData.Data.Data.Districts, new string[]
+            await InsertData(tables[0], districtData.Data.Data.Districts, new string[]
                 { "@Id", "@Title", "@Population", "@Square", "@AreaId" });
 
-            tableName = "OTGs";
-            var communData = await new ParseDecentralizationGovUa<CommunDataResponseModel>(queries[1]).Parse();
-            await DeleteOldData(tableName);
-            await InsertData(tableName, communData.Data.Data.CommunInfoModels, new string[]
+            var communData = await new ParseDecentralizationGovUa<CommunDataResponseModel>(queries[1]).Parse(); 
+            await InsertData(tables[1], communData.Data.Data.CommunInfoModels, new string[]
                 { "@Id", "@Title", "@Population", "@Square", "@CouncilSize", "@Center", "@Koatuu", "@Site", "@AreaId", "@DistrictId" });
         }
 
