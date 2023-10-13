@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,6 @@ namespace DecentralizationGovUa.Models
         public string Site { get; set; }
         public int AreaId { get; set; }
         public int RegionId { get; set; }
-        public List<> GeoPoints { get; set; }
+        public GeoPointModel GeoPoints { get; set; }
     }
 }
