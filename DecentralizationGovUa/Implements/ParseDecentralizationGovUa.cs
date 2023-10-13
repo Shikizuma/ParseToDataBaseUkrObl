@@ -9,26 +9,27 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Implements
 {
-    public class ParseDecentralizationGovUa<M, D> : IEnumerable<RegionInfoModel>, IEnumerator<RegionInfoModel>
+    public class ParseDecentralizationGovUa<T>
     {
         private readonly string _url = "https://decentralization.gov.ua/graphql";
+        private string _query;
 
-        public async Task<BaseResponse<D>> Parse()
+        public ParseDecentralizationGovUa(string query)
         {
-            var baseResponse = new BaseResponse<D>();
+            _query = query;
+        }
+
+        public async Task<BaseResponse<T>> Parse()
+        {
+            var baseResponse = new BaseResponse<T>();
 
             try
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var query = "{areas{title,id,square,population,local_community_count,percent_communities_from_area,sum_communities_square}}";
-                    var requestData = new { query };
-                    Console.WriteLine(requestData);
+                    var requestData = new { query = _query };
                     var jsonRequest = JsonConvert.SerializeObject(requestData);
-                    Console.WriteLine(jsonRequest);
                     var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
-
-                    Console.WriteLine(content.Headers);
 
                     var response = await client.PostAsync(_url, content);
 
@@ -39,55 +40,94 @@ namespace DecentralizationGovUa.Implements
 
                     string jsonResponse = await response.Content.ReadAsStringAsync();
 
-                    Console.WriteLine(jsonResponse);
-
-                    baseResponse.Data = JsonConvert.DeserializeObject<D>(jsonResponse);
+                    baseResponse.Data = JsonConvert.DeserializeObject<T>(jsonResponse);
                 }
             }
             catch (Exception ex)
             {
-
             }
 
             return baseResponse;
         }
 
-        public RegionInfoModel Current => throw new NotImplementedException();
 
-        object IEnumerator.Current => throw new NotImplementedException();
+        //private readonly string _url = "https://decentralization.gov.ua/graphql";
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task<BaseResponse<RegionDataResponseModel>> Parse()
+        //{
+        //    var baseResponse = new BaseResponse<RegionDataResponseModel>();
 
-        public IEnumerator<RegionInfoModel> GetEnumerator()
-        {
-            var result = Parse();
-            result.Wait();
-            var response = result.Result;
-            if (response.Status == Enums.Status.Ok)
-            {
-                foreach (var region in response.Data.Data.Areas)
-                {
-                    yield return region;
-                }
-            }
-        }
+        //    try
+        //    {
+        //        using (HttpClient client = new HttpClient())
+        //        {
+        //            var query = "{areas{title,id,square,population,local_community_count,percent_communities_from_area,sum_communities_square}}";
+        //            var requestData = new { query };
+        //            Console.WriteLine(requestData);
+        //            var jsonRequest = JsonConvert.SerializeObject(requestData);
+        //            Console.WriteLine(jsonRequest);
+        //            var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
 
-        public bool MoveNext()
-        {
-            throw new NotImplementedException();
-        }
+        //            Console.WriteLine(content.Headers);
 
-        public void Reset()
-        {
-            throw new NotImplementedException();
-        }
+        //            var response = await client.PostAsync(_url, content);
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        //            if (!response.IsSuccessStatusCode)
+        //            {
+        //                throw new Exception(response.ReasonPhrase);
+        //            }
+
+        //            string jsonResponse = await response.Content.ReadAsStringAsync();
+
+        //            Console.WriteLine(jsonResponse);
+
+        //            baseResponse.Data = JsonConvert.DeserializeObject<RegionDataResponseModel>(jsonResponse);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //    }
+
+        //    return baseResponse;
+        //}
+
+        //public RegionInfoModel Current => throw new NotImplementedException();
+
+        //object IEnumerator.Current => throw new NotImplementedException();
+
+        //public void Dispose()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public IEnumerator<RegionInfoModel> GetEnumerator()
+        //{
+        //    var result = Parse();
+        //    result.Wait();
+        //    var response = result.Result;
+        //    if (response.Status == Enums.Status.Ok)
+        //    {
+        //        foreach (var region in response.Data.Data.Areas)
+        //        {
+        //            yield return region;
+        //        }
+        //    }
+        //}
+
+        //public bool MoveNext()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public void Reset()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //IEnumerator IEnumerable.GetEnumerator()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
