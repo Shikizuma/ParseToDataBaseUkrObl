@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Models
 {
-    public class RegionDataModel
+    public class RegionInfoModel
     {
         [JsonProperty("id")]
         public int Id { get; set; }
