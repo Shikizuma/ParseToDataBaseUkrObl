@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Models.GeoPointModels
 {
-    internal class GeometryModel
+    public class GeometryModel
     {
+        public Guid Id { get; set; }
         [JsonProperty("type")]
         public string Type { get; set; }
         [JsonProperty("coordinates")]
-        public List<List<List<double>>> Coordinates { get; set; }
-    }
+        public List<CoordinatesInfoModel> Coordinates { get; set; }
+        public int CommunId { get; set; }
+}
 }

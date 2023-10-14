@@ -54,7 +54,7 @@ namespace ParseToDataBaseUkrObl
             foreach (var communId in communsDataId)
             {
                 var urlGet = "https://decentralization.gov.ua/api/v1/communities/" + communId + "/geo_json";
-                var villageData = await new ParseDecentralizationGovUa<VillageCommunDataResponseModel>("", urlGet).Parse(HttpMethod.Get);
+                var villageData = await new ParseDecentralizationGovUa<RootModel>("", urlGet).Parse(HttpMethod.Get);
                 await InsertData(tables[3], villageData.Data.Data.Community.Villages, new string[]
                 { "@Id", "@Title", "@Category", "@CommunId"}, communId);
             }

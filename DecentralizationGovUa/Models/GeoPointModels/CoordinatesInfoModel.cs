@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Models.GeoPointModels
 {
-    public class RootModel
-    {
-        public FeatureModel Feature { get; set; }
+    public class CoordinatesInfoModel
+    {      
+        List<List<double>> Coordinates { get; set; }
     }
 }

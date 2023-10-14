@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Models.GeoPointModels
 {
-    internal class FeatureModel
+    public class FeatureModel
     {
         [JsonProperty("type")]
         public string Type { get; set; }
