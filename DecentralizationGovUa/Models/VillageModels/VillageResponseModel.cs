@@ -9,8 +9,6 @@ namespace DecentralizationGovUa.Models.VillageModels
 {
     public class VillageResponseModel
     {
-        [JsonProperty("id")]
-        public int CommunityId { get; set; }
         [JsonProperty("villages")]
         public List<VillageInfoModel> Villages { get; set; }
     }

@@ -4,6 +4,7 @@ using Dapper;
 using DecentralizationGovUa.Models.CommunModels;
 using DecentralizationGovUa.Models.RegionModels;
 using DecentralizationGovUa.Models.DistrictModels;
+using DecentralizationGovUa.Models.VillageModels;
 
 namespace ParseToDataBaseUkrObl
 {
@@ -11,17 +12,18 @@ namespace ParseToDataBaseUkrObl
     {
         static async Task Main(string[] args)
         {
+            int numOfCommun = 0;
             var queries = new List<string>
             {
                 "{areas{title,id,square,population,local_community_count,percent_communities_from_area,sum_communities_square}}",
                 "{communities{title,id,population,square,council_size,district_size,center,koatuu,site,region_id,area_id}}",
                 "{regions{title,area_id,id,population,square}}",
-                $"{{community(id: \"{4097}\"){{title,id,villages{{title, category}}}}"
+                $"{{community(id: \"{numOfCommun}\"){{villages{{title, category}}}}"
             };
 
             var tables = new List<string> 
             { 
-                "Districts", "OTGs", "Regions" 
+                "Districts", "OTGs", "Regions", "Villages"
             };
 
             //await DeleteOldData(tables[1]);
@@ -29,8 +31,8 @@ namespace ParseToDataBaseUkrObl
             //await DeleteOldData(tables[2]);
 
             var regionData = await new ParseDecentralizationGovUa<RegionDataResponseModel>(queries[0]).Parse();
-            //await InsertData(tables[2], regionData.Data.Data.Areas, new string[]
-            //    { "@Id", "@Title", "@Square", "@Population", "@LocalCommunityCount", "@PercentCommunitiesFromArea", "@SumCommunitiesSquare" });
+            await InsertData(tables[2], regionData.Data.Data.Areas, new string[]
+                { "@Id", "@Title", "@Square", "@Population", "@LocalCommunityCount", "@PercentCommunitiesFromArea", "@SumCommunitiesSquare" });
 
             var districtData = await new ParseDecentralizationGovUa<DistrictDataResponseModel>(queries[2]).Parse();
             //await InsertData(tables[0], districtData.Data.Data.Districts, new string[]
@@ -40,10 +42,13 @@ namespace ParseToDataBaseUkrObl
             //await InsertData(tables[1], communData.Data.Data.CommunInfoModels, new string[]
             //    { "@Id", "@Title", "@Population", "@Square", "@CouncilSize", "@Center", "@Koatuu", "@Site", "@AreaId", "@DistrictId" });
             
-            List<int> communDataId = communData.Data.Data.CommunInfoModels.Select(commun => commun.Id).ToList();
-            foreach (var commun in communDataId)
+            List<int> communsDataId = communData.Data.Data.CommunInfoModels.Select(commun => commun.Id).ToList();
+            foreach (var communId in communsDataId)
             {
-
+                numOfCommun = communId;
+                var villageData = await new ParseDecentralizationGovUa<VillageCommunDataResponseModel>(queries[3]).Parse();
+                await InsertData(tables[3], villageData.Data.Data.Community.Villages, new string[]
+                { "@Id", "@Title", "@Category", "@CommunId"});
             }
         }
 
@@ -56,7 +61,7 @@ namespace ParseToDataBaseUkrObl
             }
         }
 
-        static async Task InsertData<T>(string tableName, IEnumerable<T> data, string[] paramsNames)
+        static async Task InsertData<T>(string tableName, IEnumerable<T> data, string[] paramsNames, int numOfCommun = 0)
         {
             using (var database = Context.Connection)
             {
@@ -65,7 +70,18 @@ namespace ParseToDataBaseUkrObl
 
                 foreach (var item in data)
                 {
-                    await database.ExecuteAsync(query, item);
+                    if(item is VillageInfoModel village)
+                    {
+                        var villageCopy = new VillageInfoModel
+                        {
+                            Id = Guid.NewGuid(),                   
+                        };
+                    }
+                    else
+                    {
+                        await database.ExecuteAsync(query, item);
+                    }
+                   
                 }
             }
         }

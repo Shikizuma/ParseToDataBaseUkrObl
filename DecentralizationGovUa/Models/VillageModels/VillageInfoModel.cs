@@ -14,5 +14,6 @@ namespace DecentralizationGovUa.Models.VillageModels
         public string Title { get; set; }
         [JsonProperty("category")]
         public string Category { get; set; }
+        public int CommunId { get; set; }
     }
 }
