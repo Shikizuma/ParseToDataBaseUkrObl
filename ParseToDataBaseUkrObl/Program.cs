@@ -12,13 +12,11 @@ namespace ParseToDataBaseUkrObl
     {
         static async Task Main(string[] args)
         {
-            int numOfCommun = 0;
             var queries = new List<string>
             {
                 "{areas{title,id,square,population,local_community_count,percent_communities_from_area,sum_communities_square}}",
                 "{communities{title,id,population,square,council_size,district_size,center,koatuu,site,region_id,area_id}}",
                 "{regions{title,area_id,id,population,square}}",
-                $"{{community(id: \"{numOfCommun}\"){{villages{{title, category}}}}"
             };
 
             var tables = new List<string> 
@@ -31,8 +29,8 @@ namespace ParseToDataBaseUkrObl
             //await DeleteOldData(tables[2]);
 
             var regionData = await new ParseDecentralizationGovUa<RegionDataResponseModel>(queries[0]).Parse();
-            await InsertData(tables[2], regionData.Data.Data.Areas, new string[]
-                { "@Id", "@Title", "@Square", "@Population", "@LocalCommunityCount", "@PercentCommunitiesFromArea", "@SumCommunitiesSquare" });
+            //await InsertData(tables[2], regionData.Data.Data.Areas, new string[]
+            //    { "@Id", "@Title", "@Square", "@Population", "@LocalCommunityCount", "@PercentCommunitiesFromArea", "@SumCommunitiesSquare" });
 
             var districtData = await new ParseDecentralizationGovUa<DistrictDataResponseModel>(queries[2]).Parse();
             //await InsertData(tables[0], districtData.Data.Data.Districts, new string[]
@@ -45,10 +43,10 @@ namespace ParseToDataBaseUkrObl
             List<int> communsDataId = communData.Data.Data.CommunInfoModels.Select(commun => commun.Id).ToList();
             foreach (var communId in communsDataId)
             {
-                numOfCommun = communId;
-                var villageData = await new ParseDecentralizationGovUa<VillageCommunDataResponseModel>(queries[3]).Parse();
+                var villageQuery = "{community(id:\"" + communId + "\"){villages{title, category}}}";
+                var villageData = await new ParseDecentralizationGovUa<VillageCommunDataResponseModel>(villageQuery).Parse();
                 await InsertData(tables[3], villageData.Data.Data.Community.Villages, new string[]
-                { "@Id", "@Title", "@Category", "@CommunId"});
+                { "@Id", "@Title", "@Category", "@CommunId"}, communId);
             }
         }
 
@@ -74,8 +72,13 @@ namespace ParseToDataBaseUkrObl
                     {
                         var villageCopy = new VillageInfoModel
                         {
-                            Id = Guid.NewGuid(),                   
+                            Id = Guid.NewGuid(),
+                            Title = village.Title,
+                            Category = village.Category,
+                            CommunId = numOfCommun
                         };
+                        Console.WriteLine(villageCopy.CommunId);
+                        await database.ExecuteAsync(query, villageCopy);
                     }
                     else
                     {
