@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Models
 {
-    internal class VillageInfoModel
+    public class VillageInfoModel
     {
         public Guid Id { get; set; }
         [JsonProperty("title")]

@@ -37,9 +37,12 @@ namespace ParseToDataBaseUkrObl
             var communData = await new ParseDecentralizationGovUa<CommunDataResponseModel>(queries[1]).Parse();
             //await InsertData(tables[1], communData.Data.Data.CommunInfoModels, new string[]
             //    { "@Id", "@Title", "@Population", "@Square", "@CouncilSize", "@Center", "@Koatuu", "@Site", "@AreaId", "@DistrictId" });
-
+            
             List<int> communDataId = communData.Data.Data.CommunInfoModels.Select(commun => commun.Id).ToList();
+            foreach (var commun in communDataId)
+            {
 
+            }
         }
 
         static async Task DeleteOldData(string tableName)
