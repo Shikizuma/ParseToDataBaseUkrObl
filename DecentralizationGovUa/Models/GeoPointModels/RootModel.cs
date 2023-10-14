@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DecentralizationGovUa.Models
+namespace DecentralizationGovUa.Models.GeoPointModels
 {
-    public class GeoPointModel
+    internal class RootModel
     {
+        public FeatureModel Feature { get; set; }
     }
 }

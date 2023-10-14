@@ -24,22 +24,23 @@ namespace ParseToDataBaseUkrObl
                 "Districts", "OTGs", "Regions", "Villages"
             };
 
-            //await DeleteOldData(tables[1]);
-            //await DeleteOldData(tables[0]);
-            //await DeleteOldData(tables[2]);
+            await DeleteOldData(tables[3]);
+            await DeleteOldData(tables[1]);
+            await DeleteOldData(tables[0]);
+            await DeleteOldData(tables[2]);
 
             var regionData = await new ParseDecentralizationGovUa<RegionDataResponseModel>(queries[0]).Parse();
-            //await InsertData(tables[2], regionData.Data.Data.Areas, new string[]
-            //    { "@Id", "@Title", "@Square", "@Population", "@LocalCommunityCount", "@PercentCommunitiesFromArea", "@SumCommunitiesSquare" });
+            await InsertData(tables[2], regionData.Data.Data.Areas, new string[]
+                { "@Id", "@Title", "@Square", "@Population", "@LocalCommunityCount", "@PercentCommunitiesFromArea", "@SumCommunitiesSquare" });
 
             var districtData = await new ParseDecentralizationGovUa<DistrictDataResponseModel>(queries[2]).Parse();
-            //await InsertData(tables[0], districtData.Data.Data.Districts, new string[]
-            //    { "@Id", "@Title", "@Population", "@Square", "@AreaId" });
+            await InsertData(tables[0], districtData.Data.Data.Districts, new string[]
+                { "@Id", "@Title", "@Population", "@Square", "@AreaId" });
 
             var communData = await new ParseDecentralizationGovUa<CommunDataResponseModel>(queries[1]).Parse();
-            //await InsertData(tables[1], communData.Data.Data.CommunInfoModels, new string[]
-            //    { "@Id", "@Title", "@Population", "@Square", "@CouncilSize", "@Center", "@Koatuu", "@Site", "@AreaId", "@DistrictId" });
-            
+            await InsertData(tables[1], communData.Data.Data.CommunInfoModels, new string[]
+                { "@Id", "@Title", "@Population", "@Square", "@CouncilSize", "@Center", "@Koatuu", "@Site", "@AreaId", "@DistrictId" });
+
             List<int> communsDataId = communData.Data.Data.CommunInfoModels.Select(commun => commun.Id).ToList();
             foreach (var communId in communsDataId)
             {
