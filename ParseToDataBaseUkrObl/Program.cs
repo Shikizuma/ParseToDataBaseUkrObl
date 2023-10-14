@@ -13,7 +13,8 @@ namespace ParseToDataBaseUkrObl
             {
                 "{areas{title,id,square,population,local_community_count,percent_communities_from_area,sum_communities_square}}",
                 "{communities{title,id,population,square,council_size,district_size,center,koatuu,site,region_id,area_id}}",
-                "{regions{title,area_id,id,population,square}}"
+                "{regions{title,area_id,id,population,square}}",
+                $"{{community(id: \"{4097}\"){{title,id,villages{{title, category}}}}"
             };
 
             var tables = new List<string> 
@@ -21,21 +22,24 @@ namespace ParseToDataBaseUkrObl
                 "Districts", "OTGs", "Regions" 
             };
 
-            await DeleteOldData(tables[1]);
-            await DeleteOldData(tables[0]);
-            await DeleteOldData(tables[2]);
-           
-            var regionData = await new ParseDecentralizationGovUa<RegionDataResponseModel>(queries[0]).Parse();
-            await InsertData(tables[2], regionData.Data.Data.Areas, new string[]
-                { "@Id", "@Title", "@Square", "@Population", "@LocalCommunityCount", "@PercentCommunitiesFromArea", "@SumCommunitiesSquare" });
+            //await DeleteOldData(tables[1]);
+            //await DeleteOldData(tables[0]);
+            //await DeleteOldData(tables[2]);
 
-            var districtData = await new ParseDecentralizationGovUa<DistrictDataResponseModel>(queries[2]).Parse();
-            await InsertData(tables[0], districtData.Data.Data.Districts, new string[]
-                { "@Id", "@Title", "@Population", "@Square", "@AreaId" });
+            //var regionData = await new ParseDecentralizationGovUa<RegionDataResponseModel>(queries[0]).Parse();
+            //await InsertData(tables[2], regionData.Data.Data.Areas, new string[]
+            //    { "@Id", "@Title", "@Square", "@Population", "@LocalCommunityCount", "@PercentCommunitiesFromArea", "@SumCommunitiesSquare" });
 
-            var communData = await new ParseDecentralizationGovUa<CommunDataResponseModel>(queries[1]).Parse(); 
-            await InsertData(tables[1], communData.Data.Data.CommunInfoModels, new string[]
-                { "@Id", "@Title", "@Population", "@Square", "@CouncilSize", "@Center", "@Koatuu", "@Site", "@AreaId", "@DistrictId" });
+            //var districtData = await new ParseDecentralizationGovUa<DistrictDataResponseModel>(queries[2]).Parse();
+            //await InsertData(tables[0], districtData.Data.Data.Districts, new string[]
+            //    { "@Id", "@Title", "@Population", "@Square", "@AreaId" });
+
+            var communData = await new ParseDecentralizationGovUa<CommunDataResponseModel>(queries[1]).Parse();
+            //await InsertData(tables[1], communData.Data.Data.CommunInfoModels, new string[]
+            //    { "@Id", "@Title", "@Population", "@Square", "@CouncilSize", "@Center", "@Koatuu", "@Site", "@AreaId", "@DistrictId" });
+
+            List<int> communDataId = communData.Data.Data.CommunInfoModels.Select(commun => commun.Id).ToList();
+
         }
 
         static async Task DeleteOldData(string tableName)
