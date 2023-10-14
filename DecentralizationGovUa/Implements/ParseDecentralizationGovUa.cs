@@ -11,36 +11,44 @@ namespace DecentralizationGovUa.Implements
 {
     public class ParseDecentralizationGovUa<T>
     {
-        private readonly string _url = "https://decentralization.gov.ua/graphql";
+        private string _url;
         private string _query;
 
-        public ParseDecentralizationGovUa(string query)
+        public ParseDecentralizationGovUa(string query, string url)
         {
             _query = query;
+            _url = url;
         }
 
-        public async Task<BaseResponse<T>> Parse()
+        public async Task<BaseResponse<T>> Parse(HttpMethod httpMethod)
         {
             var baseResponse = new BaseResponse<T>();
-
+             
             try
-            {
+            {              
                 using (HttpClient client = new HttpClient())
                 {
-                    var requestData = new { query = _query };
-                    var jsonRequest = JsonConvert.SerializeObject(requestData);
-                    var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
-
-                    var response = await client.PostAsync(_url, content);
-
-                    if (!response.IsSuccessStatusCode)
+                    if (httpMethod == HttpMethod.Post)
                     {
-                        throw new Exception(response.ReasonPhrase);
+                        var requestData = new { query = _query };
+                        var jsonRequest = JsonConvert.SerializeObject(requestData);
+                        var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+
+                        var response = await client.PostAsync(_url, content);
+                        await HandleResponse(response, baseResponse);
                     }
-
-                    string jsonResponse = await response.Content.ReadAsStringAsync();
-
-                    baseResponse.Data = JsonConvert.DeserializeObject<T>(jsonResponse);
+                    else if (httpMethod == HttpMethod.Get)
+                    {
+                        var response = await client.GetAsync(_url);
+                        await HandleResponse(response, baseResponse);
+                    }
+                
+                    /*if (!response.IsSuccessStatusCode)
+                    //{
+                    //    throw new Exception(response.ReasonPhrase);
+                    //}
+                    //string jsonResponse = await response.Content.ReadAsStringAsync();
+                    //baseResponse.Data = JsonConvert.DeserializeObject<T>(jsonResponse);*/
                 }
             }
             catch (Exception ex)
@@ -48,6 +56,16 @@ namespace DecentralizationGovUa.Implements
             }
 
             return baseResponse;
+        }
+        private async Task HandleResponse(HttpResponseMessage response, BaseResponse<T> baseResponse)
+        {
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(response.ReasonPhrase);
+            }
+
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            baseResponse.Data = JsonConvert.DeserializeObject<T>(jsonResponse);
         }
     }
 }

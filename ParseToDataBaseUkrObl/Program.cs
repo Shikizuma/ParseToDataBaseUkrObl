@@ -12,6 +12,8 @@ namespace ParseToDataBaseUkrObl
     {
         static async Task Main(string[] args)
         {
+            var urlPost = "https://decentralization.gov.ua/graphql";
+
             var queries = new List<string>
             {
                 "{areas{title,id,square,population,local_community_count,percent_communities_from_area,sum_communities_square}}",
@@ -29,15 +31,15 @@ namespace ParseToDataBaseUkrObl
             await DeleteOldData(tables[0]);
             await DeleteOldData(tables[2]);
 
-            var regionData = await new ParseDecentralizationGovUa<RegionDataResponseModel>(queries[0]).Parse();
+            var regionData = await new ParseDecentralizationGovUa<RegionDataResponseModel>(queries[0], urlPost).Parse(HttpMethod.Post);
             await InsertData(tables[2], regionData.Data.Data.Areas, new string[]
                 { "@Id", "@Title", "@Square", "@Population", "@LocalCommunityCount", "@PercentCommunitiesFromArea", "@SumCommunitiesSquare" });
 
-            var districtData = await new ParseDecentralizationGovUa<DistrictDataResponseModel>(queries[2]).Parse();
+            var districtData = await new ParseDecentralizationGovUa<DistrictDataResponseModel>(queries[2], urlPost).Parse(HttpMethod.Post);
             await InsertData(tables[0], districtData.Data.Data.Districts, new string[]
                 { "@Id", "@Title", "@Population", "@Square", "@AreaId" });
 
-            var communData = await new ParseDecentralizationGovUa<CommunDataResponseModel>(queries[1]).Parse();
+            var communData = await new ParseDecentralizationGovUa<CommunDataResponseModel>(queries[1], urlPost).Parse(HttpMethod.Post);
             await InsertData(tables[1], communData.Data.Data.CommunInfoModels, new string[]
                 { "@Id", "@Title", "@Population", "@Square", "@CouncilSize", "@Center", "@Koatuu", "@Site", "@AreaId", "@DistrictId" });
 
@@ -45,7 +47,14 @@ namespace ParseToDataBaseUkrObl
             foreach (var communId in communsDataId)
             {
                 var villageQuery = "{community(id:\"" + communId + "\"){villages{title, category}}}";
-                var villageData = await new ParseDecentralizationGovUa<VillageCommunDataResponseModel>(villageQuery).Parse();
+                var villageData = await new ParseDecentralizationGovUa<VillageCommunDataResponseModel>(villageQuery, urlPost).Parse(HttpMethod.Post);
+                await InsertData(tables[3], villageData.Data.Data.Community.Villages, new string[]
+                { "@Id", "@Title", "@Category", "@CommunId"}, communId);
+            }
+            foreach (var communId in communsDataId)
+            {
+                var urlGet = "https://decentralization.gov.ua/api/v1/communities/" + communId + "/geo_json";
+                var villageData = await new ParseDecentralizationGovUa<VillageCommunDataResponseModel>("", urlGet).Parse(HttpMethod.Get);
                 await InsertData(tables[3], villageData.Data.Data.Community.Villages, new string[]
                 { "@Id", "@Title", "@Category", "@CommunId"}, communId);
             }
