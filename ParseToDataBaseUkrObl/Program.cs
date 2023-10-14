@@ -5,6 +5,8 @@ using DecentralizationGovUa.Models.CommunModels;
 using DecentralizationGovUa.Models.RegionModels;
 using DecentralizationGovUa.Models.DistrictModels;
 using DecentralizationGovUa.Models.VillageModels;
+using DecentralizationGovUa.Models.GeoPointModels;
+using System.Collections.Generic;
 
 namespace ParseToDataBaseUkrObl
 {
@@ -23,7 +25,7 @@ namespace ParseToDataBaseUkrObl
 
             var tables = new List<string> 
             { 
-                "Districts", "OTGs", "Regions", "Villages"
+                "Districts", "OTGs", "Regions", "Villages", "GeoPoints"
             };
 
             await DeleteOldData(tables[3]);
@@ -51,13 +53,13 @@ namespace ParseToDataBaseUkrObl
                 await InsertData(tables[3], villageData.Data.Data.Community.Villages, new string[]
                 { "@Id", "@Title", "@Category", "@CommunId"}, communId);
             }
-            foreach (var communId in communsDataId)
-            {
-                var urlGet = "https://decentralization.gov.ua/api/v1/communities/" + communId + "/geo_json";
-                var villageData = await new ParseDecentralizationGovUa<RootModel>("", urlGet).Parse(HttpMethod.Get);
-                await InsertData(tables[3], villageData.Data.Data.Community.Villages, new string[]
-                { "@Id", "@Title", "@Category", "@CommunId"}, communId);
-            }
+            //foreach (var communId in communsDataId)
+            //{
+            //    var urlGet = "https://decentralization.gov.ua/api/v1/communities/" + communId + "/geo_json";
+            //    var pointData = await new ParseDecentralizationGovUa<GeoDataModel>("", urlGet).Parse(HttpMethod.Get);
+            //    await InsertData(tables[4], pointData.Data.Geometry.Coordinates, new string[]
+            //    { "@Id", "@GeoCoordinates", "@CommunId"}, communId);
+            //}
         }
 
         static async Task DeleteOldData(string tableName)
@@ -90,9 +92,15 @@ namespace ParseToDataBaseUkrObl
                         Console.WriteLine(villageCopy.CommunId);
                         await database.ExecuteAsync(query, villageCopy);
                     }
+                    //else if(item is  List<List<List<double>>>coordinate)
+                    //{
+                    //    PointEntityModel pointEntity = new PointEntityModel();
+                    //    pointEntity.CreateInstance(coordinate, numOfCommun);
+                    //    await database.ExecuteAsync(query, pointEntity);                
+                    //}
                     else
                     {
-                        await database.ExecuteAsync(query, item);
+                       await database.ExecuteAsync(query, item);          
                     }
                    
                 }

@@ -41,14 +41,7 @@ namespace DecentralizationGovUa.Implements
                     {
                         var response = await client.GetAsync(_url);
                         await HandleResponse(response, baseResponse);
-                    }
-                
-                    /*if (!response.IsSuccessStatusCode)
-                    //{
-                    //    throw new Exception(response.ReasonPhrase);
-                    //}
-                    //string jsonResponse = await response.Content.ReadAsStringAsync();
-                    //baseResponse.Data = JsonConvert.DeserializeObject<T>(jsonResponse);*/
+                    }               
                 }
             }
             catch (Exception ex)
