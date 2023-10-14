@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DecentralizationGovUa.Models
+namespace DecentralizationGovUa.Models.CommunModels
 {
     public class CommunInfoModel
     {

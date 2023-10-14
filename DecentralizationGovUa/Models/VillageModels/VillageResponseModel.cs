@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DecentralizationGovUa.Models
+namespace DecentralizationGovUa.Models.VillageModels
 {
-    public class VillageCommunCommunityResponseModel
+    public class VillageResponseModel
     {
         [JsonProperty("id")]
         public int CommunityId { get; set; }

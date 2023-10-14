@@ -1,7 +1,9 @@
 ﻿using DecentralizationGovUa.Data;
 using DecentralizationGovUa.Implements;
 using Dapper;
-using DecentralizationGovUa.Models;
+using DecentralizationGovUa.Models.CommunModels;
+using DecentralizationGovUa.Models.RegionModels;
+using DecentralizationGovUa.Models.DistrictModels;
 
 namespace ParseToDataBaseUkrObl
 {
@@ -26,11 +28,11 @@ namespace ParseToDataBaseUkrObl
             //await DeleteOldData(tables[0]);
             //await DeleteOldData(tables[2]);
 
-            //var regionData = await new ParseDecentralizationGovUa<RegionDataResponseModel>(queries[0]).Parse();
+            var regionData = await new ParseDecentralizationGovUa<RegionDataResponseModel>(queries[0]).Parse();
             //await InsertData(tables[2], regionData.Data.Data.Areas, new string[]
             //    { "@Id", "@Title", "@Square", "@Population", "@LocalCommunityCount", "@PercentCommunitiesFromArea", "@SumCommunitiesSquare" });
 
-            //var districtData = await new ParseDecentralizationGovUa<DistrictDataResponseModel>(queries[2]).Parse();
+            var districtData = await new ParseDecentralizationGovUa<DistrictDataResponseModel>(queries[2]).Parse();
             //await InsertData(tables[0], districtData.Data.Data.Districts, new string[]
             //    { "@Id", "@Title", "@Population", "@Square", "@AreaId" });
 

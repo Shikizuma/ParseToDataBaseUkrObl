@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DecentralizationGovUa.Models
+namespace DecentralizationGovUa.Models.VillageModels
 {
-    public class DistrictDataResponseModel
+    public class VillageCommunDataResponseModel
     {
         [JsonProperty("data")]
-        public DistrictResponseModel Data { get; set; }
+        public VillageCommunCommunityResponseModel Data { get; set; }
     }
 }
