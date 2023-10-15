@@ -53,13 +53,6 @@ namespace ParseToDataBaseUkrObl
                 await InsertData(tables[3], villageData.Data.Data.Community.Villages, new string[]
                 { "@Id", "@Title", "@Category", "@CommunId"}, communId);
             }
-            //foreach (var communId in communsDataId)
-            //{
-            //    var urlGet = "https://decentralization.gov.ua/api/v1/communities/" + communId + "/geo_json";
-            //    var pointData = await new ParseDecentralizationGovUa<GeoDataModel>("", urlGet).Parse(HttpMethod.Get);
-            //    await InsertData(tables[4], pointData.Data.Geometry.Coordinates, new string[]
-            //    { "@Id", "@GeoCoordinates", "@CommunId"}, communId);
-            //}
         }
 
         static async Task DeleteOldData(string tableName)
