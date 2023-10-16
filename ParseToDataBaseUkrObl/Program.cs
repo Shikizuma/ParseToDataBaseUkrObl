@@ -84,13 +84,7 @@ namespace ParseToDataBaseUkrObl
                         };
                         Console.WriteLine(villageCopy.CommunId);
                         await database.ExecuteAsync(query, villageCopy);
-                    }
-                    //else if(item is  List<List<List<double>>>coordinate)
-                    //{
-                    //    PointEntityModel pointEntity = new PointEntityModel();
-                    //    pointEntity.CreateInstance(coordinate, numOfCommun);
-                    //    await database.ExecuteAsync(query, pointEntity);                
-                    //}
+                    }            
                     else
                     {
                        await database.ExecuteAsync(query, item);          
