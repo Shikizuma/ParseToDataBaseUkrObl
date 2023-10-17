@@ -17,8 +17,6 @@ namespace DecentralizationUaMapWeb.Controllers
 
         public IActionResult Index()
         {
-            string filePath = "путь_к_JSON_файлу.json";
-            string key = GetJson(filePath);
             ViewBag.Key = Token;
             return View();
         }
