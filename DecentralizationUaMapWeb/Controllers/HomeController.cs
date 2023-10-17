@@ -1,5 +1,6 @@
 ﻿using DecentralizationUaMapWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 
 namespace DecentralizationUaMapWeb.Controllers
@@ -7,6 +8,7 @@ namespace DecentralizationUaMapWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        static string Token = GetJson("config.json");
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -15,6 +17,9 @@ namespace DecentralizationUaMapWeb.Controllers
 
         public IActionResult Index()
         {
+            string filePath = "путь_к_JSON_файлу.json";
+            string key = GetJson(filePath);
+            ViewBag.Key = Token;
             return View();
         }
 
@@ -27,6 +32,24 @@ namespace DecentralizationUaMapWeb.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        static string GetJson(string filePath)
+        {
+            string key = string.Empty;
+
+            try
+            {
+                string jsonString = System.IO.File.ReadAllText(filePath);
+                JObject json = JObject.Parse(jsonString);
+                key = (string)json["key_map"]!;
+                return key;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Помилка при зчитуванні JSON файлу: {ex.Message}");
+                return "";
+            }
         }
     }
 }
