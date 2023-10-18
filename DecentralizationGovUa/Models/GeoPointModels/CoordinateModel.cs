@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Models.GeoPointModels
 {
-    public class GeometryModel
+    public class CoordinateModel
     {
-        [JsonProperty("coordinates")]
-        public CoordinateModel Coordinates { get; set; }
+        public dynamic[][][] Points { get; set; }
     }
 }
