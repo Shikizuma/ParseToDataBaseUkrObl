@@ -8,7 +8,7 @@ namespace DecentralizationUaMapWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        static string Token = GetJson("config.json");
+        static string Token = GetJson("C:\\Users\\myros\\source\\repos\\ParseToDataBaseUkrObl\\DecentralizationUaMapWeb\\configure.json");
 
         public HomeController(ILogger<HomeController> logger)
         {
