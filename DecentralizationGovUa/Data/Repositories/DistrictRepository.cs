@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Data.Repositories
 {
-    public class DistrictRepository
+    public class DistrictRepository : BaseRepository
     {
     }
 }
