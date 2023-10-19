@@ -26,7 +26,7 @@ namespace DecentralizationGovUa.Services
                     var geomerty = JsonConvert.DeserializeObject<GeoDataModel>(json);
                     if (geomerty == null)
                     {
-                        throw new Exception("Error Desirialaze");
+                        throw new Exception("Error Deserialize");
                     }
                     var coordinates = new List<CoordinateModel>();
                     foreach (var point in geomerty.Geometry.Coordinates[0])
@@ -37,6 +37,7 @@ namespace DecentralizationGovUa.Services
                             Latitude = point[1]
                         });
                     }
+
                     baseResponse.Data = coordinates;
                 }
             }
