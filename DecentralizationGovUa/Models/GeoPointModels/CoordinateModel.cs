@@ -8,6 +8,8 @@ namespace DecentralizationGovUa.Models.GeoPointModels
 {
     public class CoordinateModel
     {
-        public dynamic[][][] Points { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
+    
 }

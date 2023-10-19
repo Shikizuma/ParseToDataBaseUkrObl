@@ -10,6 +10,6 @@ namespace DecentralizationGovUa.Models.GeoPointModels
     public class GeometryModel
     {
         [JsonProperty("coordinates")]
-        public CoordinateModel Coordinates { get; set; }
+        public dynamic Coordinates { get; set; }
     }
 }
