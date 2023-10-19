@@ -15,5 +15,13 @@ namespace DecentralizationGovUa.Models.VillageModels
         [JsonProperty("category")]
         public string Category { get; set; }
         public int CommunId { get; set; }
+
+        public VillageInfoModel(string title, string category, int communId)
+        {
+            Id = Guid.NewGuid();
+            Title = title;
+            Category = category;
+            CommunId = communId;
+        }
     }
 }

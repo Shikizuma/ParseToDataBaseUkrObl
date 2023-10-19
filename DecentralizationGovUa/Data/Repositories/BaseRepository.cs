@@ -9,7 +9,7 @@ namespace DecentralizationGovUa.Data.Repositories
 {
     public class BaseRepository
     {
-        protected async Task DeleteOldData(string tableName)
+        protected async Task DeleteData(string tableName)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace DecentralizationGovUa.Data.Repositories
             }
         }
 
-        protected async Task InsertData<T>(string tableName, IEnumerable<T> data, string[] paramsNames, int numOfCommun = 0)
+        protected async Task InsertData<T>(string tableName, IEnumerable<T> data, string[] paramsNames)
         {
             try
             {
@@ -33,8 +33,10 @@ namespace DecentralizationGovUa.Data.Repositories
                 {
                     var valuesPlaceholder = string.Join(", ", paramsNames);
                     var query = $"INSERT INTO {tableName} VALUES ({valuesPlaceholder}";
-
-                    await database.ExecuteAsync(query, item);
+                    foreach (var item in data)
+                    {
+                        await database.ExecuteAsync(query, item);
+                    }             
                 }
             }
             catch (Exception ex)

@@ -24,7 +24,12 @@ namespace DecentralizationGovUa.Services
                 ParseDecentralizationGovUa<VillageCommunDataResponseModel> parseDecentralizationGovUa = new(query);
 
                 var villageDataResponse = await parseDecentralizationGovUa.Parse();
-                villageData.AddRange(villageDataResponse.Data.Data.Community.Villages);
+
+                foreach (var villageDataItem in villageDataResponse.Data.Data.Community.Villages)
+                {
+                    var village = new VillageInfoModel(villageDataItem.Title, villageDataItem.Category, communId);
+                    villageData.Add(village);
+                }
             }
 
             return villageData;
