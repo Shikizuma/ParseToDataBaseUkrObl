@@ -10,6 +10,6 @@ namespace DecentralizationGovUa.Models.CommunModels
     public class CommunResponseModel
     {
         [JsonProperty("communities")]
-        public List<CommunInfoModel> CommunInfoModels { get; set; }
+        public List<CommunInfoModel> Communs { get; set; }
     }
 }
