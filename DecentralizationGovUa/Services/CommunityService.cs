@@ -17,9 +17,15 @@ namespace DecentralizationGovUa.Services
 
             ParseDecentralizationGovUa<CommunDataResponseModel> parseDecentralizationGovUa = new(query);
 
-            var regionData = await parseDecentralizationGovUa.Parse();
+            var communData = await parseDecentralizationGovUa.Parse();
 
-            return regionData.Data.Data.Communs;
+            return communData.Data.Data.Communs;
+        }
+
+        public List<int> GetCommunitiesId() 
+        {
+            List<CommunInfoModel> communs = GetCommunities().Result;
+            return communs.Select(commun => commun.Id).ToList();
         }
     }
 }
