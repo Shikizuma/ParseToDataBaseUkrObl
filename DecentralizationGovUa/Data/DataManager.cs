@@ -1,4 +1,5 @@
 ﻿using DecentralizationGovUa.Data.Repositories;
+using DecentralizationGovUa.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,12 @@ namespace DecentralizationGovUa.Data
         private readonly VillageRepository villageRepository;
         private readonly GeoPointRepository geoPointRepository;
 
+        private readonly RegionService regionService;
+        private readonly CommunityService communityService;
+        private readonly DistrictService districtService;
+        private readonly VillageService villageService;
+        private readonly GeoPointService geoPointService;
+
         public DataManager()
         {
             regionRepository = new RegionRepository();
@@ -22,6 +29,12 @@ namespace DecentralizationGovUa.Data
             communityRepository = new CommunityRepository();
             villageRepository = new VillageRepository();
             geoPointRepository = new GeoPointRepository();
+
+            regionService = new RegionService();
+            communityService = new CommunityService();
+            districtService = new DistrictService();
+            villageService = new VillageService();
+            geoPointService = new GeoPointService();
         }
 
         public async Task DeleteAllData()
@@ -35,11 +48,11 @@ namespace DecentralizationGovUa.Data
 
         public async Task InsertAllData()
         {
-            await regionRepository.InsertDataForRegions();
-            await communityRepository.InsertDataForCommunities();
-            await districtRepository.InsertDataForDistricts();
-            await geoPointRepository.InsertDataForGeoPoints();
-            await villageRepository.InsertDataForVillages();                        
+            await regionRepository.InsertDataForRegions(regionService.GetRegions().Result);
+            await communityRepository.InsertDataForCommunities(communityService.GetCommunities().Result);
+            await districtRepository.InsertDataForDistricts(districtService.GetDistricts().Result);
+            await geoPointRepository.InsertDataForGeoPoints(geoPointService.GetGeoPointsCommunites().Result);
+            await villageRepository.InsertDataForVillages(villageService.GetVillages().Result);                        
         }
     }
 }

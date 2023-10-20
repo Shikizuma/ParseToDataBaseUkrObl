@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace DecentralizationGovUa.Implements
 {
-    public class ParseDecentralizationGovUa<T>
+    public class PostParseDecentralizationGovUa<T>
     {
         private string _url = "https://decentralization.gov.ua/graphql";
         private string _query;
 
-        public ParseDecentralizationGovUa(string query)
+        public PostParseDecentralizationGovUa(string query)
         {
             _query = query;
         }
 
-        public async Task<BaseResponse<T>> Parse()
+        public async Task<BaseResponse<T>> PostParse()
         {
             var baseResponse = new BaseResponse<T>();
              

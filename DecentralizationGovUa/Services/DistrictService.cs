@@ -15,9 +15,9 @@ namespace DecentralizationGovUa.Services
         {
             string query = "{regions{title,area_id,id,population,square}}";
 
-            ParseDecentralizationGovUa<DistrictDataResponseModel> parseDecentralizationGovUa = new(query);
+            PostParseDecentralizationGovUa<DistrictDataResponseModel> parseDecentralizationGovUa = new(query);
 
-            var districtData = await parseDecentralizationGovUa.Parse();
+            var districtData = await parseDecentralizationGovUa.PostParse();
 
             return districtData.Data.Data.Districts;
         }

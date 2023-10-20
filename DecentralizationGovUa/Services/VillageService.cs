@@ -21,9 +21,9 @@ namespace DecentralizationGovUa.Services
             {
                 string query = "{community(id:\"" + communId + "\"){villages{title, category}}}";
 
-                ParseDecentralizationGovUa<VillageCommunDataResponseModel> parseDecentralizationGovUa = new(query);
+                PostParseDecentralizationGovUa<VillageCommunDataResponseModel> parseDecentralizationGovUa = new(query);
 
-                var villageDataResponse = await parseDecentralizationGovUa.Parse();
+                var villageDataResponse = await parseDecentralizationGovUa.PostParse();
 
                 foreach (var villageDataItem in villageDataResponse.Data.Data.Community.Villages)
                 {
