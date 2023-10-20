@@ -10,20 +10,18 @@ namespace DecentralizationGovUa.Data.Repositories
 {
     public class VillageRepository : BaseRepository
     {
-        public async Task InsertDataForRegions(IEnumerable<VillageInfoModel> data)
+        string tableName = "Villages";
+        string[] paramNames = new string[]
+          { "@Id", "@Title", "@Category", "@CommunId"};
+
+        public async Task DeleteVillages()
         {
-            string tableName = "Villages";
-            string[] paramNames = new string[]
-              { "@Id", "@Title", "@Category", "@CommunId"};
+            await DeleteData(tableName);
+        }
 
-            try
-            {
-                await InsertData(tableName, data, paramNames);
-            }
-            catch (Exception ex)
-            {
-
-            }
+        public async Task InsertDataForVillages(IEnumerable<VillageInfoModel> data)
+        {           
+            await InsertData(tableName, data, paramNames);
         }
     }
 }
