@@ -32,7 +32,7 @@ namespace DecentralizationGovUa.Data.Repositories
                 using (var database = Context.Connection)
                 {
                     var valuesPlaceholder = string.Join(", ", paramsNames);
-                    var query = $"INSERT INTO {tableName} VALUES ({valuesPlaceholder}";
+                    var query = $"INSERT INTO {tableName} VALUES ({valuesPlaceholder})";
                     foreach (var item in data)
                     {
                         await database.ExecuteAsync(query, item);

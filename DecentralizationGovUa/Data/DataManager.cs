@@ -49,8 +49,8 @@ namespace DecentralizationGovUa.Data
         public async Task InsertAllData()
         {
             await regionRepository.InsertDataForRegions(regionService.GetRegions().Result);
-            await communityRepository.InsertDataForCommunities(communityService.GetCommunities().Result);
             await districtRepository.InsertDataForDistricts(districtService.GetDistricts().Result);
+            await communityRepository.InsertDataForCommunities(communityService.GetCommunities().Result);
             await geoPointRepository.InsertDataForGeoPoints(geoPointService.GetGeoPointsCommunites().Result);
             await villageRepository.InsertDataForVillages(villageService.GetVillages().Result);                        
         }

@@ -10,6 +10,6 @@ namespace DecentralizationGovUa.Models.GeoPointModels
     public class GeoDataModel
     {
         [JsonProperty("geometry")]
-        public GeometryModel Geometry { get; set; }
+        public GeometryModel? Geometry { get; set; }
     }
 }

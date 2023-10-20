@@ -65,20 +65,28 @@ namespace DecentralizationGovUa.Services
             var coordinates = new List<CoordinateModel>();
             foreach (var communityId in communsDataId)
             {
-                string url = $"/{communityId}/geo_json";
+                string url = $"{communityId}/geo_json";
                 GetParseDecentralizationGovUa<GeoDataModel> getParseDecentralizationGovUa = new(url);
                 var geoData = await getParseDecentralizationGovUa.GetParse();
 
-                foreach (var point in geoData.Data.Geometry.Coordinates[0])
+                if (geoData.Data.Geometry != null)
                 {
-                    coordinates.Add(new CoordinateModel
+                    foreach (var point in geoData.Data.Geometry.Coordinates[0])
                     {
-                        Id = Guid.NewGuid(),
-                        Longitude = point[0],
-                        Latitude = point[1],
-                        CommunId = communityId
-                    });
+                        if (point != null)
+                        {
+                            coordinates.Add(new CoordinateModel
+                            {
+                                Id = Guid.NewGuid(),
+                                Longitude = point[0],
+                                Latitude = point[1],
+                                CommunId = communityId
+                            });
+                        }
+                    }
                 }
+
+               
             }
             return coordinates;
         }
