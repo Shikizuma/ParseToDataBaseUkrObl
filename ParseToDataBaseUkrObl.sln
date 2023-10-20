@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParseToDataBaseUkrObl", "ParseToDataBaseUkrObl\ParseToDataBaseUkrObl.csproj", "{5FA469DF-9307-4666-9AD7-166E35418289}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecentralizationGovUa", "DecentralizationGovUa\DecentralizationGovUa.csproj", "{76CC5BC3-8ABC-443E-9061-8D39C5C2CD05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecentralizationUaMapWeb", "DecentralizationUaMapWeb\DecentralizationUaMapWeb.csproj", "{231865AE-14FD-417A-AD2C-5FAC71842575}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DecentralizationUaMapWeb", "DecentralizationUaMapWeb\DecentralizationUaMapWeb.csproj", "{231865AE-14FD-417A-AD2C-5FAC71842575}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5FA469DF-9307-4666-9AD7-166E35418289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FA469DF-9307-4666-9AD7-166E35418289}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FA469DF-9307-4666-9AD7-166E35418289}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FA469DF-9307-4666-9AD7-166E35418289}.Release|Any CPU.Build.0 = Release|Any CPU
 		{76CC5BC3-8ABC-443E-9061-8D39C5C2CD05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{76CC5BC3-8ABC-443E-9061-8D39C5C2CD05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76CC5BC3-8ABC-443E-9061-8D39C5C2CD05}.Release|Any CPU.ActiveCfg = Release|Any CPU

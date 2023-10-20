@@ -12,7 +12,7 @@ namespace DecentralizationGovUa.Services
 {
     public class VillageService
     {
-        public async Task<List<VillageInfoModel>> GetDistricts()
+        public async Task<List<VillageInfoModel>> GetVillages()
         {
             List<int> communsDataId = new CommunityService().GetCommunitiesId();
 
