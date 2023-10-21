@@ -13,6 +13,7 @@ namespace DecentralizationUaMapWeb
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddControllersWithViews();
             builder.Services.AddTransient<CommunityService>();
+            builder.Services.AddTransient<GeoPointService>();
 
             var app = builder.Build();
 

@@ -1,4 +1,5 @@
-﻿using DecentralizationGovUa.Implements;
+﻿using DecentralizationGovUa.Data.Repositories;
+using DecentralizationGovUa.Implements;
 using DecentralizationGovUa.Models;
 using DecentralizationGovUa.Models.GeoPointModels;
 using Newtonsoft.Json;
@@ -13,8 +14,14 @@ namespace DecentralizationGovUa.Services
 {
     public class GeoPointService
     {
-        List<int> communsDataId = new CommunityService().GetCommunitiesId().Result;
-        public async Task<List<CoordinateModel>> GetGeoPointsCommunites()
+        private readonly List<int> communsDataId;
+
+        public GeoPointService()
+        {
+            communsDataId = new CommunityService().GetCommunitiesId().Result;
+        }
+
+        public async Task<List<CoordinateModel>> GetAllGeoPointsCommunities()
         {
             var coordinates = new List<CoordinateModel>();
             foreach (var communityId in communsDataId)
@@ -27,22 +34,23 @@ namespace DecentralizationGovUa.Services
                 {
                     foreach (var point in geoData.Data.Geometry.Coordinates[0])
                     {
-                        if (point != null)
+                        coordinates.Add(new CoordinateModel
                         {
-                            coordinates.Add(new CoordinateModel
-                            {
-                                Id = Guid.NewGuid(),
-                                Longitude = point[0],
-                                Latitude = point[1],
-                                CommunId = communityId
-                            });
-                        }
+                            Id = Guid.NewGuid(),
+                            Longitude = point[0],
+                            Latitude = point[1],
+                            CommunId = communityId
+                        });
                     }
                 }
-
-               
             }
             return coordinates;
         }
+
+        public async Task<Dictionary<int, List<List<double>>>> SelectAllGeoPointsFromCommunities()
+        {
+            return await new GeoPointRepository().SelectAllDataPointsFromGeoPointsCommunites(communsDataId);
+        }
+
     }
 }

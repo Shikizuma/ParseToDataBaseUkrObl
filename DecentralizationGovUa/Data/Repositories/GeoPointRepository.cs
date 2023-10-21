@@ -26,13 +26,34 @@ namespace DecentralizationGovUa.Data.Repositories
             await InsertData(tableName, data, paramNames);
         }
 
+    
         public async Task<List<CoordinateModel>> SelectDataFromGeoPoints(int communId)
         {
             string[] selectParams = { "CommunId", "Latitude", "Longitude" };
             string whereParam = "CommunId = @CommunId";
 
-            var result = await SelectData<CoordinateModel>(selectParams, tableName, whereParam, communId);
+            var result = await SelectData<CoordinateModel>(selectParams, tableName, whereParam, new { CommunId = communId });
             return result;
+        }
+
+        public async Task<Dictionary<int, List<List<double>>>> SelectAllDataPointsFromGeoPointsCommunites(List<int> communityIds)
+        {
+            var geoPointsByCommunity = new Dictionary<int, List<List<double>>>();
+
+            foreach (var communityId in communityIds)
+            {
+                var geoPoints = await SelectDataFromGeoPoints(communityId);
+                var geoPointList = new List<List<double>>();
+
+                foreach (var geoPoint in geoPoints)
+                {
+                    geoPointList.Add(new List<double> { geoPoint.Latitude, geoPoint.Longitude });
+                }
+
+                geoPointsByCommunity[communityId] = geoPointList;
+            }
+
+            return geoPointsByCommunity;
         }
     }
 }

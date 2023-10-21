@@ -51,7 +51,7 @@ namespace DecentralizationGovUa.Data
             await regionRepository.InsertDataForRegions(regionService.GetRegions().Result);
             await districtRepository.InsertDataForDistricts(districtService.GetDistricts().Result);
             await communityRepository.InsertDataForCommunities(communityService.GetCommunities().Result);
-            await geoPointRepository.InsertDataForGeoPoints(geoPointService.GetGeoPointsCommunites().Result);
+            await geoPointRepository.InsertDataForGeoPoints(geoPointService.GetAllGeoPointsCommunities().Result);
             await villageRepository.InsertDataForVillages(villageService.GetVillages().Result);                        
         }
     }

@@ -22,9 +22,9 @@ namespace DecentralizationUaMapWeb.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Privacy([FromServices] CommunityService communityService)
+        public async Task<IActionResult> Privacy([FromServices] GeoPointService geoPointService)
         {
-            List<int> test = await communityService.GetCommunitiesId();
+            await geoPointService.SelectAllGeoPointsFromCommunities();
             return View();
         }
 
