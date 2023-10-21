@@ -11,8 +11,7 @@ namespace DecentralizationGovUa.Data.Repositories
     public class GeoPointRepository : BaseRepository
     {
         string tableName = "GeoPoints";
-        string[] paramNames = new string[]
-          { "@Id", "@Latitude", "@Longitude", "@CommunId"};
+       
 
         public async Task DeleteGeoPoints()
         {
@@ -21,7 +20,19 @@ namespace DecentralizationGovUa.Data.Repositories
 
         public async Task InsertDataForGeoPoints(IEnumerable<CoordinateModel> data)
         {
+            string[] paramNames = new string[]
+             { "@Id", "@Latitude", "@Longitude", "@CommunId"};
+
             await InsertData(tableName, data, paramNames);
+        }
+
+        public async Task<List<CoordinateModel>> SelectDataFromGeoPoints(int communId)
+        {
+            string[] selectParams = { "CommunId", "Latitude", "Longitude" };
+            string whereParam = "CommunId = @CommunId";
+
+            var result = await SelectData<CoordinateModel>(selectParams, tableName, whereParam, communId);
+            return result;
         }
     }
 }

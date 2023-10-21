@@ -44,5 +44,29 @@ namespace DecentralizationGovUa.Data.Repositories
 
             }
         }
+
+        protected async Task<List<T>> SelectData<T>(string[] selectParams, string tableName, string whereParam, object data)
+        {
+            try
+            {
+                using (var database = Context.Connection)
+                {
+                    var valuesPlaceholder = string.Join(", ", selectParams);
+                    var whereClause = string.IsNullOrEmpty(whereParam) ? "" : $"WHERE ({whereParam})";
+                    var query = 
+                        $"SELECT {valuesPlaceholder} " +
+                        $"FROM {tableName} " +
+                        $"{whereClause}";
+
+                    var result = await database.QueryAsync<T>(query, data);
+                    return result.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                return new List<T>();
+            }
+        }
+
     }
 }
