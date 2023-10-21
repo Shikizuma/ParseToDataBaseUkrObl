@@ -1,3 +1,4 @@
+using DecentralizationGovUa.Services;
 using Newtonsoft.Json.Linq;
 
 namespace DecentralizationUaMapWeb
@@ -11,6 +12,7 @@ namespace DecentralizationUaMapWeb
             // Add services to the container.
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddTransient<CommunityService>();
 
             var app = builder.Build();
 

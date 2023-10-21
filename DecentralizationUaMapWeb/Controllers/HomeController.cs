@@ -1,4 +1,5 @@
-﻿using DecentralizationUaMapWeb.Models;
+﻿using DecentralizationGovUa.Services;
+using DecentralizationUaMapWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
@@ -21,8 +22,9 @@ namespace DecentralizationUaMapWeb.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Privacy([FromServices] CommunityService communityService)
         {
+            List<int> test = await communityService.GetCommunitiesId();
             return View();
         }
 

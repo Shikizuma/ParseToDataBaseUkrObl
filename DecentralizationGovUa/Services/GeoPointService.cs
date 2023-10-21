@@ -13,7 +13,7 @@ namespace DecentralizationGovUa.Services
 {
     public class GeoPointService
     {
-        List<int> communsDataId = new CommunityService().GetCommunitiesId();
+        List<int> communsDataId = new CommunityService().GetCommunitiesId().Result;
         public async Task<List<CoordinateModel>> GetGeoPointsCommunites()
         {
             var coordinates = new List<CoordinateModel>();

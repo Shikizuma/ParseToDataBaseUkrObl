@@ -45,7 +45,7 @@ namespace DecentralizationGovUa.Data.Repositories
             }
         }
 
-        protected async Task<List<T>> SelectData<T>(string[] selectParams, string tableName, string whereParam, object data)
+        protected async Task<List<T>> SelectData<T>(string[] selectParams, string tableName, string? whereParam = default, object? data = default)
         {
             try
             {

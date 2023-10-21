@@ -1,6 +1,8 @@
 ﻿using DecentralizationGovUa.Models.CommunModels;
+using DecentralizationGovUa.Models.GeoPointModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +23,14 @@ namespace DecentralizationGovUa.Data.Repositories
         public async Task InsertDataForCommunities(IEnumerable<CommunInfoModel> data)
         {
             await InsertData(tableName, data, paramNames);        
+        }
+
+        public async Task<List<int>> SelectAllIdFromCommunities()
+        {
+            string[] selectParams = { "Id" };
+
+            var result = await SelectData<int>(selectParams, tableName);
+            return result;
         }
     }
 }

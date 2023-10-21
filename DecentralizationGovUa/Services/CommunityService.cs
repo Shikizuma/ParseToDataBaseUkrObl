@@ -1,4 +1,5 @@
-﻿using DecentralizationGovUa.Implements;
+﻿using DecentralizationGovUa.Data.Repositories;
+using DecentralizationGovUa.Implements;
 using DecentralizationGovUa.Models.CommunModels;
 using DecentralizationGovUa.Models.RegionModels;
 using System;
@@ -22,10 +23,9 @@ namespace DecentralizationGovUa.Services
             return communData.Data.Data.Communs;
         }
 
-        public List<int> GetCommunitiesId() 
+        public async Task<List<int>> GetCommunitiesId() 
         {
-            List<CommunInfoModel> communs = GetCommunities().Result;
-            return communs.Select(commun => commun.Id).ToList();
+            return await new CommunityRepository().SelectAllIdFromCommunities();
         }
     }
 }
