@@ -24,8 +24,12 @@ namespace DecentralizationUaMapWeb.Controllers
 
         public async Task<IActionResult> Privacy([FromServices] GeoPointService geoPointService)
         {
-            await geoPointService.SelectAllGeoPointsFromCommunities();
-            return View();
+            var response = await geoPointService.SelectAllGeoPointsFromCommunities();
+            if (response == null)
+            {
+
+            }
+            return Json(response);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

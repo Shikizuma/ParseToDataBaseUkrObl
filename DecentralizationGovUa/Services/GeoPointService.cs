@@ -47,10 +47,25 @@ namespace DecentralizationGovUa.Services
             return coordinates;
         }
 
-        public async Task<Dictionary<int, List<List<double>>>> SelectAllGeoPointsFromCommunities()
+        public async Task<List<CoordinateModel>> SelectGeoPointsFromCommunity()
         {
-            return await new GeoPointRepository().SelectAllDataPointsFromGeoPointsCommunites(communsDataId);
+            return await new GeoPointRepository().SelectDataFromGeoPoints(4076);
         }
+
+        public async Task<dynamic> SelectAllGeoPointsFromCommunities()
+        {
+            Dictionary<int, List<List<double>>> data = await new GeoPointRepository().SelectAllDataPointsFromGeoPointsCommunites(communsDataId);
+
+            var transformedData = data.Select(pair =>
+            new
+            {
+                Id = pair.Key,
+                Coordinates = pair.Value.Select(coord => new { Lat = coord[0], Lng = coord[1] }).ToList()
+            }).ToList();
+
+            return transformedData;
+        }
+
 
     }
 }
