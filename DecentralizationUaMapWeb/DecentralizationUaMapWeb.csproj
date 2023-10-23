@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="bin\Debug\net6.0\" />
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>

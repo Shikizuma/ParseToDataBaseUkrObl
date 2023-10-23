@@ -1,4 +1,5 @@
 using DecentralizationGovUa.Services;
+using DecentralizationUaMapWeb.Extensions;
 using Newtonsoft.Json.Linq;
 
 namespace DecentralizationUaMapWeb
@@ -10,10 +11,7 @@ namespace DecentralizationUaMapWeb
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var provider = builder.Services.BuildServiceProvider();
-            var hostEnv = provider.GetService<IWebHostEnvironment>();
-            var mapKey = Path.Combine(hostEnv.WebRootPath, "keys", "configure.json");
-            builder.Configuration.AddJsonFile(mapKey);
+            builder.AddMapConfigure();
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddControllersWithViews();
             builder.Services.AddTransient<CommunityService>();

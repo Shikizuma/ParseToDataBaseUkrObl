@@ -9,16 +9,15 @@ namespace DecentralizationUaMapWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        static string Token = 
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromServices] IConfiguration configuration)
         {
-            ViewBag.Key = Token;
+            ViewBag.Key = configuration["key_map"]!;
             return View();
         }
 
