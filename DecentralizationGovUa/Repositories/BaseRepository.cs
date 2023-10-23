@@ -1,11 +1,12 @@
 ﻿using Dapper;
+using DecentralizationGovUa.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DecentralizationGovUa.Data.Repositories
+namespace DecentralizationGovUa.Repositories
 {
     public class BaseRepository
     {

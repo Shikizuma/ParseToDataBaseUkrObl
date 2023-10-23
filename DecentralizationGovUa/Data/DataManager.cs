@@ -1,4 +1,4 @@
-﻿using DecentralizationGovUa.Data.Repositories;
+﻿using DecentralizationGovUa.Repositories;
 using DecentralizationGovUa.Services;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,6 @@
 ﻿using DecentralizationGovUa.Models.CommunModels;
 using DecentralizationGovUa.Models.GeoPointModels;
+using DecentralizationGovUa.Repositories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DecentralizationGovUa.Data.Repositories
+namespace DecentralizationGovUa.Repositories
 {
     public class CommunityRepository : BaseRepository
     {
