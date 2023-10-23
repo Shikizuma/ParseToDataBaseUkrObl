@@ -12,13 +12,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="configure.json">
+    <Content Update="wwwroot\keys\configure.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="bin\Debug\net6.0\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>

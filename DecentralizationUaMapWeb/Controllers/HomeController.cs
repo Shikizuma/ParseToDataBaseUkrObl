@@ -9,7 +9,7 @@ namespace DecentralizationUaMapWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        static string Token = GetJson("C:\\Users\\myros\\source\\repos\\ParseToDataBaseUkrObl\\DecentralizationUaMapWeb\\configure.json");
+        static string Token = 
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -36,24 +36,6 @@ namespace DecentralizationUaMapWeb.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        static string GetJson(string filePath)
-        {
-            string key = string.Empty;
-
-            try
-            {
-                string jsonString = System.IO.File.ReadAllText(filePath);
-                JObject json = JObject.Parse(jsonString);
-                key = (string)json["key_map"]!;
-                return key;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Помилка при зчитуванні JSON файлу: {ex.Message}");
-                return "";
-            }
         }
     }
 }

@@ -10,6 +10,10 @@ namespace DecentralizationUaMapWeb
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            var provider = builder.Services.BuildServiceProvider();
+            var hostEnv = provider.GetService<IWebHostEnvironment>();
+            var mapKey = Path.Combine(hostEnv.WebRootPath, "keys", "configure.json");
+            builder.Configuration.AddJsonFile(mapKey);
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddControllersWithViews();
             builder.Services.AddTransient<CommunityService>();
