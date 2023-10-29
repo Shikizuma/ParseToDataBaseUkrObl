@@ -3,7 +3,7 @@
 async function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 12,
-        center: { lat: 49.22152448966356, lng: 28.296777679846187 },
+        center: { lat: 50.22152448966356, lng: 28.296777679846187 },
         mapTypeId: "terrain",
     });
 
